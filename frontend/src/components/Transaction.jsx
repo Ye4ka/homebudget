@@ -1,6 +1,8 @@
+import { Button } from "./Button.jsx";
+
 const Transaction = () => {
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
     <h1 className="text-2xl font-bold mb-6 text-gray-800">Финансовые операции</h1>
     
     <div className="overflow-x-auto bg-white rounded-lg shadow">
@@ -82,7 +84,7 @@ const Transaction = () => {
         </table>
     </div>
 
-    <button className="px-5 py-3 bg-yellow-500 font-montserrat font-medium w-74 rounded-2xl text-white mt-10">Загрузить ещё</button>
+    <Button variant="yellow" className="mt-5">Добавить доход</Button>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Home = () => {
                     </div>
                     <div className="flex flex-col gap-10 mb-20 w-128">
                         <FastAction />
-                        <div className="mt-13">
+                        <div className="mt-7">
                             <Goals />
                         </div>
                     </div>
