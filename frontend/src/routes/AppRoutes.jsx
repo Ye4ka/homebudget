@@ -4,7 +4,7 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 
 import Home from "../pages/Home/Home";
-// import TransactionsPage from "../pages/Transactions/TransactionsPage"; // создашь позже
+import TransactionsPage from "../pages/Transactions/TransactionsPage";
 
 import Layout from "../layouts/Layout";
 import ProtectedRoute from "./ProtectedRoute";
@@ -26,7 +26,7 @@ const AppRoutes = () => {
           }
         >
           <Route path="/dashboard" element={<Home />} />
-          {/* <Route path="/transactions" element={<TransactionsPage />} /> */}
+          <Route path="/transactions" element={<TransactionsPage />} />
         </Route>
 
         {/* fallback */}
