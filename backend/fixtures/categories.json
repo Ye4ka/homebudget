@@ -1,0 +1,134 @@
+[
+  {
+    "model": "categories.category",
+    "pk": 1,
+    "fields": {
+      "name": "Зарплата",
+      "type": "income",
+      "color": "#4CAF50",
+      "icon": "💰",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 2,
+    "fields": {
+      "name": "Инвестиции", 
+      "type": "income",
+      "color": "#8BC34A",
+      "icon": "📈",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category", 
+    "pk": 3,
+    "fields": {
+      "name": "Фриланс",
+      "type": "income", 
+      "color": "#CDDC39",
+      "icon": "💻",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 4,
+    "fields": {
+      "name": "Подарки",
+      "type": "income",
+      "color": "#FFEB3B",
+      "icon": "🎁",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 5,
+    "fields": {
+      "name": "Кэшбэк",
+      "type": "income",
+      "color": "#FFC107",
+      "icon": "💳",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 6,
+    "fields": {
+      "name": "Депозиты",
+      "type": "income",
+      "color": "#FF9800",
+      "icon": "🏦",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 7,
+    "fields": {
+      "name": "Продукты",
+      "type": "expense",
+      "color": "#F44336",
+      "icon": "🛒",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 8,
+    "fields": {
+      "name": "Транспорт",
+      "type": "expense",
+      "color": "#E91E63",
+      "icon": "🚗",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 9,
+    "fields": {
+      "name": "Развлечения",
+      "type": "expense",
+      "color": "#9C27B0",
+      "icon": "🎬",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 10,
+    "fields": {
+      "name": "ЖКХ",
+      "type": "expense",
+      "color": "#673AB7",
+      "icon": "🏠",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 11,
+    "fields": {
+      "name": "Одежда",
+      "type": "expense",
+      "color": "#3F51B5",
+      "icon": "👕",
+      "is_default": true
+    }
+  },
+  {
+    "model": "categories.category",
+    "pk": 12,
+    "fields": {
+      "name": "Здоровье",
+      "type": "expense",
+      "color": "#2196F3",
+      "icon": "⚕️",
+      "is_default": true
+    }
+  }
+]
