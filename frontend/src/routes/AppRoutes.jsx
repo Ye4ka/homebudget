@@ -1,37 +1,36 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home/Home";
+
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 
-// фейковая авторизация (заменишь когда будет бэкенд)
-const isAuth = () => {
-  return localStorage.getItem("token");
-};
+import Home from "../pages/Home/Home";
+// import TransactionsPage from "../pages/Transactions/TransactionsPage"; // создашь позже
 
-const ProtectedRoute = ({ children }) => {
-  if (!isAuth()) {
-    return <Login />;
-  }
-  return children;
-};
+import Layout from "../layouts/Layout";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ---------------- AUTH ---------------- */}
+        {/* AUTH */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ---------------- PRIVATE ---------------- */}
+        {/* DASHBOARD */}
         <Route
-          path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <Layout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="/dashboard" element={<Home />} />
+          {/* <Route path="/transactions" element={<TransactionsPage />} /> */}
+        </Route>
+
+        {/* fallback */}
+        <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

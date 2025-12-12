@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import Avatar from "../assets/images/ava.png";
 import Dash from "../assets/images/dashboard.png";
 import Operation from "../assets/images/operation.svg";
@@ -9,38 +11,73 @@ import Quit from "../assets/images/quit.png";
 const Aside = () => {
   return (
     <div className="flex flex-col gap-y-20">
-        <div className="flex flex-col justify-between gap-y-5">
-            <img src={Avatar} alt="ava" className="w-18 h-18 rounded-full" />
-            <p className="font-montserrat font-bold">Данил Камерунин</p>
+
+      {/* user */}
+      <div className="flex flex-col justify-between gap-y-5">
+        <img src={Avatar} alt="ava" className="w-18 h-18 rounded-full" />
+        <p className="font-montserrat font-bold">Данил Камерунин</p>
+      </div>
+
+      {/* navigation */}
+      <div className="flex flex-col gap-y-3">
+
+        <Link
+          to="/dashboard"
+          className="flex items-center gap-x-3 hover:opacity-80 transition"
+        >
+          <img src={Dash} alt="" />
+          <p className="font-montserrat font-regular">главная страница</p>
+        </Link>
+
+        <Link
+          to="/transactions"
+          className="flex items-center gap-x-3 hover:opacity-80 transition"
+        >
+          <img src={Operation} alt="" />
+          <p className="font-montserrat font-regular">операции</p>
+        </Link>
+
+        <Link
+          to="/analytics"
+          className="flex items-center gap-x-3 hover:opacity-80 transition"
+        >
+          <img src={Analyst} alt="" />
+          <p className="font-montserrat font-regular">анализ</p>
+        </Link>
+
+        <Link
+          to="/planning"
+          className="flex items-center gap-x-3 hover:opacity-80 transition"
+        >
+          <img src={Plane} alt="" />
+          <p className="font-montserrat font-regular">планирование</p>
+        </Link>
+
+      </div>
+
+      {/* settings + quit */}
+      <div className="flex flex-col gap-y-3">
+
+        <Link
+          to="/settings"
+          className="flex items-center gap-x-3 hover:opacity-80 transition"
+        >
+          <img src={Settings} alt="" />
+          <p className="font-montserrat font-regular">настройки</p>
+        </Link>
+
+        <div
+          className="flex items-center gap-x-3 hover:opacity-80 cursor-pointer transition"
+          onClick={() => {
+            localStorage.removeItem("token");
+            window.location.href = "/login";
+          }}
+        >
+          <img src={Quit} alt="" />
+          <p className="font-montserrat font-regular">выйти</p>
         </div>
-        <div className="flex flex-col gap-y-3">
-            <div className="flex items-center gap-x-3">
-                <img src={Dash} alt="ava" className="" />
-                <p className="font-montserrat font-regular">главная страница</p>
-            </div>
-            <div className="flex items-center gap-x-3">
-                <img src={Operation} alt="ava" className="" />
-                <p className="font-montserrat font-regular">операции</p>
-            </div>
-            <div className="flex items-center gap-x-3">
-                <img src={Analyst} alt="ava" className="" />
-                <p className="font-montserrat font-regular">анализ</p>
-            </div>
-            <div className="flex items-center gap-x-3">
-                <img src={Plane} alt="ava" className="" />
-                <p className="font-montserrat font-regular">планирование</p>
-            </div>
-        </div>
-        <div className="flex flex-col gap-y-3">
-            <div className="flex items-center gap-x-3">
-                <img src={Settings} alt="ava" className="" />
-                <p className="font-montserrat font-regular">настройки</p>
-            </div>
-            <div className="flex items-center gap-x-3">
-                <img src={Quit} alt="ava" className="" />
-                <p className="font-montserrat font-regular">выйти</p>
-            </div>
-        </div>
+
+      </div>
     </div>
   );
 };
