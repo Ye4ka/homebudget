@@ -11,6 +11,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
+AUTH_USER_MODEL = 'users.User'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,6 +28,10 @@ INSTALLED_APPS = [
     'apps.budgets',
     'apps.categories',
     'apps.transactions',
+    'apps.goals',
+    'apps.notifications',
+    'apps.analytics',
+    'apps.files',
 ]
 
 MIDDLEWARE = [
