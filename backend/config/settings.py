@@ -14,17 +14,22 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
+
+    'apps.users',
+
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
+
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
     'django_filters',
-    'apps.users',
+    
     'apps.budgets',
     'apps.categories',
     'apps.transactions',
@@ -32,6 +37,8 @@ INSTALLED_APPS = [
     'apps.notifications',
     'apps.analytics',
     'apps.files',
+    'apps.utils',
+    
 ]
 
 MIDDLEWARE = [
@@ -67,11 +74,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'homebudget',
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',  
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'homebudget'),
+        'USER': os.environ.get('DB_USER', 'myuser'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'mypassword'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 

@@ -1,45 +1,44 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils import timezone
+from django.db import models
+from django.core.validators import RegexValidator
+
 
 class User(AbstractUser):
+    """Пользователь системы"""
+    
     CURRENCY_CHOICES = [
-        ('RUB', 'Рубли'),
-        ('USD', 'Доллары'),
+        ('RUB', 'Рубль'),
+        ('USD', 'Доллар США'),
         ('EUR', 'Евро'),
+        ('KZT', 'Тенге'),
     ]
     
+    email = models.EmailField(
+        'Email адрес',
+        unique=True,
+        error_messages={
+            'unique': 'Пользователь с таким email уже существует.',
+        }
+    )
+    
     currency = models.CharField(
-        max_length=3, 
-        choices=CURRENCY_CHOICES, 
-        default='RUB'
-    )
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
-        blank=True,
-        help_text='The groups this user belongs to.',
-        related_name='custom_user_set',  
-        related_query_name='custom_user',
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name='custom_user_set',  
-        related_query_name='custom_user',
-    )
-    
-    class Meta:
-        db_table = 'users'
-        constraints = [
-            models.UniqueConstraint(fields=['username'], name='users_username_key'),
-            models.UniqueConstraint(fields=['email'], name='users_email_key'),
+        'Валюта по умолчанию',
+        max_length=3,
+        choices=CURRENCY_CHOICES,
+        default='RUB',
+        validators=[
+            RegexValidator(
+                regex='^(RUB|USD|EUR|KZT)$',
+                message='Валюта должна быть RUB, USD, EUR или KZT'
+            )
         ]
+    )
+    
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['-date_joined']  
     
     def __str__(self):
         return self.username
