@@ -24,7 +24,7 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-5"
+        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-5 m-6"
       >
         <h2 className="text-2xl font-bold text-center">Login</h2>
 

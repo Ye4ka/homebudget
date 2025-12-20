@@ -10,7 +10,7 @@ const Layout = () => {
       <div className="mt-20 flex">
         <Aside />
         
-        <div className="ml-20 flex gap-x-20 w-full">
+        <div className="sm:ml-20 flex gap-x-20 w-full">
           <Outlet />
         </div>
       </div>

@@ -1,6 +1,6 @@
 const TransactionTable = ({ data }) => {
   return (
-    <table className="w-full bg-white rounded-xl shadow overflow-hidden">
+    <table className="md:w-full bg-white rounded-xl shadow overflow-hidden">
       <thead className="bg-gray-100">
         <tr>
           <th className="p-3 text-left">Дата</th>

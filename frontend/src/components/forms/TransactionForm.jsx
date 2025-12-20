@@ -32,7 +32,7 @@ const TransactionForm = ({ isOpen, mode = "create", transaction = {}, onSubmit, 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex justify-center items-center p-4">
+    <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center p-4">
       <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
         <h2 className="text-xl font-semibold mb-4">
           {mode === "create" ? "Добавить операцию" : "Редактировать операцию"}

@@ -41,37 +41,37 @@ const Balance = () => {
     );
 
   return (
-    <div className="flex flex-col gap-y-10 p-5 bg-gradient-to-b from-[#FFFCF6] to-[#FFF0DB] rounded-lg">
-      <div className="flex items-end gap-x-20">
+    <div className="flex flex-col gap-y-10 p-3 md:p-5 bg-gradient-to-b from-[#FFFCF6] to-[#FFF0DB] rounded-lg">
+      <div className="flex items-end gap-x-10 md:gap-x-20">
         <div className="flex flex-col gap-y-5">
-          <p className="font-montserrat font-semibold text-2xl">Текущий баланс</p>
-          <h1 className="font-montserrat font-semibold text-5xl">
+          <p className="font-montserrat font-semibold text-xl md:text-2xl">Текущий баланс</p>
+          <h1 className="font-montserrat font-semibold text-4xl md:text-5xl">
             {data.balance} ₽
           </h1>
         </div>
-        <img src={Coin} alt="coin" />
+        <img src={Coin} alt="coin" className="w-32" />
       </div>
 
-      <div className="flex gap-x-10">
+      <div className="flex gap-x-5 md:gap-x-10">
         <div className="flex flex-col">
-          <p className="font-montserrat font-semibold text-2xl">
+          <p className="font-montserrat font-semibold text-xl md:text-2xl">
             {data.income} ₽
           </p>
-          <h1 className="font-montserrat text-xl">доход</h1>
+          <h1 className="font-montserrat">доход</h1>
         </div>
 
         <div className="flex flex-col">
-          <p className="font-montserrat font-semibold text-2xl">
+          <p className="font-montserrat font-semibold text-xl md:text-2xl">
             {data.expense} ₽
           </p>
-          <h1 className="font-montserrat text-xl">расход</h1>
+          <h1 className="font-montserrat">расход</h1>
         </div>
 
         <div className="flex flex-col">
-          <p className="font-montserrat font-semibold text-2xl">
+          <p className="font-montserrat font-semibold text-xl md:text-2xl">
             {data.savings} ₽
           </p>
-          <h1 className="font-montserrat text-xl">накопления</h1>
+          <h1 className="font-montserrat">накопления</h1>
         </div>
       </div>
     </div>

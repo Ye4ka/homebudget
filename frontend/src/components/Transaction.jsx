@@ -49,16 +49,16 @@ const Transaction = () => {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
+              <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
                 Название
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
+              <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
                 Тип
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
+              <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
                 Дата
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
+              <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase border-b">
                 Сумма
               </th>
             </tr>
@@ -67,10 +67,10 @@ const Transaction = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {transactions.map((t, index) => (
               <tr key={index} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 text-sm font-medium">{t.name}</td>
-                <td className="px-6 py-4 text-sm text-gray-500">{t.type}</td>
-                <td className="px-6 py-4 text-sm text-gray-500">{t.date}</td>
-                <td className="px-6 py-4 text-sm font-semibold text-green-600">
+                <td className="px-2 md:px-6 py-4 text-sm font-medium">{t.name}</td>
+                <td className="px-2 md:px-6 py-4 text-sm text-gray-500">{t.type}</td>
+                <td className="px-2 md:px-6 py-4 text-sm text-gray-500">{t.date}</td>
+                <td className="px-2 md:px-6 py-4 text-sm font-semibold text-green-600">
                   {t.amount} ₽
                 </td>
               </tr>

@@ -123,13 +123,17 @@ const TransactionsPage = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-y-10">
+    <div className="w-full flex flex-col gap-y-6 sm:gap-y-10 px-2 sm:px-0">
+
       {/* Заголовок + кнопка */}
-      <div className="flex justify-between items-center">
-        <h1 className="font-montserrat text-4xl font-semibold">Операции</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h1 className="font-montserrat text-2xl sm:text-4xl font-semibold">
+          Операции
+        </h1>
 
         <Button
           variant="yellow"
+          className="w-full sm:w-auto"
           onClick={() => {
             setSelectedTx(null);
             setIsFormOpen(true);
@@ -140,24 +144,32 @@ const TransactionsPage = () => {
       </div>
 
       {/* Фильтры */}
-      <Filters filters={filters} setFilters={setFilters} resetFilters={resetFilters} />
+      <div className="overflow-x-auto">
+        <Filters
+          filters={filters}
+          setFilters={setFilters}
+          resetFilters={resetFilters}
+        />
+      </div>
 
       {/* Таблица */}
-      <TransactionTable
-        loading={loading}
-        error={error}
-        data={filteredTransactions}
-        onEdit={(tx) => {
-          setSelectedTx(tx);
-          setIsFormOpen(true);
-        }}
-        onDelete={(tx) => {
-          setSelectedTx(tx);
-          setIsDeleteOpen(true);
-        }}
-      />
+      <div className="overflow-x-auto">
+        <TransactionTable
+          loading={loading}
+          error={error}
+          data={filteredTransactions}
+          onEdit={(tx) => {
+            setSelectedTx(tx);
+            setIsFormOpen(true);
+          }}
+          onDelete={(tx) => {
+            setSelectedTx(tx);
+            setIsDeleteOpen(true);
+          }}
+        />
+      </div>
 
-      {/* Модалка создания/редактирования */}
+      {/* Модалки */}
       <TransactionForm
         isOpen={isFormOpen}
         mode={selectedTx ? "edit" : "create"}
@@ -169,7 +181,6 @@ const TransactionsPage = () => {
         }}
       />
 
-      {/* Модалка удаления */}
       <DeleteConfirmModal
         isOpen={isDeleteOpen}
         transactionInfo={selectedTx}
@@ -178,6 +189,7 @@ const TransactionsPage = () => {
       />
     </div>
   );
+
 };
 
 export default TransactionsPage;

@@ -2,8 +2,9 @@ const Filters = ({ filters, setFilters, resetFilters }) => {
   const categories = ["Зарплата", "Еда", "Фриланс"];
 
   return (
-    <div className="grid grid-cols-5 gap-5 bg-white p-5 rounded-xl shadow">
-      
+    <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 sm:gap-5 bg-white p-4 sm:p-5 rounded-xl shadow">
+
+
       {/* поиск */}
       <input
         type="text"
@@ -56,11 +57,12 @@ const Filters = ({ filters, setFilters, resetFilters }) => {
 
       {/* кнопка сброс */}
       <button
-        className="col-span-5 bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition"
+        className="sm:col-span-5 bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition"
         onClick={resetFilters}
       >
         Сбросить фильтры
       </button>
+
     </div>
   );
 };
