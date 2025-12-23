@@ -5,7 +5,8 @@ export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [appLoading, setAppLoading] = useState(true);
+    const [authLoading, setAuthLoading] = useState(false);
     const [error, setError] = useState(null);
 
   // Проверяем авторизацию при загрузке
@@ -21,7 +22,7 @@ export function AuthProvider({ children }) {
                     authService.logout();
                 }
             }
-            setLoading(false);
+            setAppLoading(false);
         };
         initAuth();
     }, []);
@@ -29,7 +30,7 @@ export function AuthProvider({ children }) {
     // Функция входа
     const login = async (credentials) => {
         setError(null);
-        setLoading(true);
+        setAuthLoading(true);
         try {
             const result = await authService.login(credentials);
             if (result.success) {
@@ -46,14 +47,14 @@ export function AuthProvider({ children }) {
             return { success: false, error: { message: errorMessage } };
         } 
         finally {
-            setLoading(false);
+            setAuthLoading(false);
         }
     };
 
     // Функция регистрации
     const register = async (userData) => {
         setError(null);
-        setLoading(true);
+        setAuthLoading(true);
         try {
             const result = await authService.register(userData);
             if (result.success) {
@@ -69,7 +70,7 @@ export function AuthProvider({ children }) {
             return { success: false, error: { message: errorMessage } };
         } 
         finally {
-            setLoading(false);
+            setAuthLoading(false)
         }
     };
 
@@ -81,7 +82,8 @@ export function AuthProvider({ children }) {
 
     const value = {
         user,
-        loading,
+        appLoading,
+        authLoading,
         error,
         login,
         register,

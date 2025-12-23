@@ -1,4 +1,4 @@
-function Spinner({ size = 32 }) {
+function Spinner({ size = 48 }) {
     return (
         <div
             className="animate-spin border-4 border-gray-300 border-t-blue-600 rounded-full"

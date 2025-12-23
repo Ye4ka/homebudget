@@ -8,6 +8,7 @@ const authService = {
          * @param {Object} userData Данные пользователя
          * @param {string} userData.email Email пользователя
          * @param {string} userData.password Пароль
+         * @param {string} userData.password Подтверждение Пароля
          * @param {string} userData.first_name Имя
          * @param {string} userData.last_name Фамилия
          * @returns {Promise<{success: boolean, data?: Object, error?: Object}>}
@@ -17,6 +18,7 @@ const authService = {
             const response = await api.post('/users/register/', {
                 email: userData.email,
                 password: userData.password,
+                password2: userData.password2,
                 first_name: userData.first_name,
                 last_name: userData.last_name,
             });

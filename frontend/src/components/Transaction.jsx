@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Spinner from "./Spinner";
 import ErrorMessage from "./ErrorMessage";
 import { Button } from "./Button";
 
@@ -30,7 +29,14 @@ const Transaction = () => {
     }, 800);
   }, []);
 
-  if (loading) return <Spinner />;
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-4">
+        <div className="h-8 w-1/2 bg-gray-200 rounded animate-pulse" />
+        <div className="h-64 bg-white rounded-xl shadow animate-pulse" />
+      </div>
+    );
+}
   if (error) return <ErrorMessage message={error} />;
 
   if (transactions.length === 0) {
