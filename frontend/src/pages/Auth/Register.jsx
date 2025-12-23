@@ -1,8 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 function Register() {
-  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const navigate = useNavigate();
+  const { register: registerUser, authLoading } = useAuth();
 
   const {
     register,
@@ -12,13 +17,42 @@ function Register() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setLoading(true);
+    setApiError(null);
+    setSuccessMessage(null);
     try {
-      console.log("Register data:", data);
-      await new Promise((res) => setTimeout(res, 1000));
-    } finally {
-      setLoading(false);
-    }
+      const result = await registerUser({
+        email: data.email,
+        password: data.password,
+        password2: data.confirmPassword,
+        first_name: data.first_name,
+        last_name: data.last_name
+      });
+      if (result.success) {
+        setSuccessMessage(result.message);
+        
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      } else {
+        const errorMessages = [];
+        
+        if (typeof result.error === 'object') {
+          Object.entries(result.error).forEach(([field, messages]) => {
+            if (Array.isArray(messages)) {
+              errorMessages.push(...messages);
+            } else {
+              errorMessages.push(messages);
+            }
+          });
+        } else {
+          errorMessages.push(result.error);
+        }
+
+        setApiError(errorMessages.join('. '));
+      }
+    } catch (err) {
+      setApiError("Ошибка подключения к серверу");
+    } 
   };
 
   const passwordValue = watch("password");
@@ -29,7 +63,17 @@ function Register() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-5 m-6"
       >
-        <h2 className="text-2xl font-bold text-center">Register</h2>
+        <h2 className="text-2xl font-bold text-center">Регистрация</h2>
+        {successMessage && (
+          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl">
+            {successMessage}
+          </div>
+        )}
+        {apiError && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+            {apiError}
+          </div>
+        )}             
 
         {/* First Name */}
         <div>
@@ -127,11 +171,21 @@ function Register() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={loading}
+          disabled={authLoading}
           className="w-full py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition disabled:bg-green-300"
         >
-          {loading ? "Загрузка..." : "Зарегистрироваться"}
+          {authLoading ? "Загрузка..." : "Зарегистрироваться"}
         </button>
+        <p className="text-center text-gray-600">
+          Уже есть аккаунт?{" "}
+          <button
+            type="button"
+            onClick={() => navigate("/login")}
+            className="text-blue-600 hover:underline"
+          >
+            Войти
+          </button>
+        </p>
       </form>
     </div>
   );

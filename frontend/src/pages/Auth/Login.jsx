@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
-  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState(null); 
+  const navigate = useNavigate();
+  const { login, authLoading } = useAuth();
 
   const {
     register,
@@ -11,13 +15,25 @@ function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setLoading(true);
+    setApiError(null);
+
     try {
-      console.log("Login data:", data);
-      await new Promise((res) => setTimeout(res, 1000)); // имитация запроса
-    } finally {
-      setLoading(false);
-    }
+      const result = await login({
+        email: data.email,
+        password: data.password
+      });
+      if (result.success) {
+        navigate("/dashboard");
+      } else {
+        setApiError(
+          result.error?.detail || 
+          result.error?.message || 
+          "Неверный email или пароль"
+        );
+      }
+    } catch (err) {
+    setApiError("Ошибка подключения к серверу");
+  }
   };
 
   return (
@@ -26,7 +42,12 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-5 m-6"
       >
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+        <h2 className="text-2xl font-bold text-center">Вход</h2>
+        {apiError && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+            {apiError}
+          </div>
+        )}
 
         {/* Email */}
         <div>
@@ -71,11 +92,21 @@ function Login() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={loading}
+          disabled={authLoading}
           className="w-full py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition disabled:bg-blue-300"
         >
-          {loading ? "Загрузка..." : "Войти"}
+          {authLoading ? "Загрузка..." : "Войти"}
         </button>
+        <p className="text-center text-gray-600">
+          Нет аккаунта?{" "}
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className="text-blue-600 hover:underline"
+          >
+            Зарегистрироваться
+          </button>
+        </p>
       </form>
     </div>
   );
