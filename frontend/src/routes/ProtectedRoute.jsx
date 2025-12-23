@@ -1,26 +1,22 @@
 import { Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const ProtectedRoute = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [allowed, setAllowed] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    setAllowed(!!token);
-    setLoading(false);
-  }, []);
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-2xl">
+      <div className="flex justify-center items-center h-screen text-2xl text-gray-600">
         Загрузка...
       </div>
     );
   }
 
-  return allowed ? children : <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;
