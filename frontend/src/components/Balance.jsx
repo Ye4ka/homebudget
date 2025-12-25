@@ -41,7 +41,7 @@ const Balance = () => {
     );
 
   return (
-    <div className="flex flex-col gap-y-10 p-3 md:p-5 bg-gradient-to-b from-[#FFFCF6] to-[#FFF0DB] rounded-lg">
+    <div className="flex flex-col gap-y-10 p-3 md:p-5 bg-linear-to-b from-[#FFFCF6] to-[#FFF0DB] rounded-lg">
       <div className="flex items-end gap-x-10 md:gap-x-20">
         <div className="flex flex-col gap-y-5">
           <p className="font-montserrat font-semibold text-xl md:text-2xl">Текущий баланс</p>

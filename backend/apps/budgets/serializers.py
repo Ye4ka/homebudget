@@ -1,4 +1,4 @@
-"""Сериализаторы для Budget модели."""
+"""Сериализаторы для приложения Budgets."""
 from rest_framework import serializers
 from apps.budgets.models import Budget
 
@@ -82,7 +82,9 @@ class BudgetCreateUpdateSerializer(serializers.ModelSerializer):
             'name',
             'type',
             'currency',
+            'id',
         ]
+        read_only_fields = ['id']
     
     def validate_name(self, value):
         """Валидация названия бюджета."""
@@ -102,19 +104,6 @@ class BudgetCreateUpdateSerializer(serializers.ModelSerializer):
         
         return value
     
-    def create(self, validated_data):
-        """Создание бюджета с автоматической установкой owner."""
-        # Получаем текущего пользователя из context
-        user = self.context['request'].user
-        
-        # Создаём бюджет с owner = текущий пользователь
-        budget = Budget.objects.create(
-            owner=user,
-            **validated_data
-        )
-        
-        return budget
-
 
 class BudgetSummarySerializer(serializers.Serializer):
     """Сериализатор для сводной информации о бюджете."""
