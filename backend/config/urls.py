@@ -16,7 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # JWT Authentication endpoints
-    # Получение access и refresh токенов (login)
+    # Получение access и refresh токенов
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     
     # Обновление access токена используя refresh токен
@@ -24,4 +24,6 @@ urlpatterns = [
     
     # API endpoints
     path('api/users/', include('apps.users.urls')),
+    path('api/budgets/', include('apps.budgets.urls')),
+    path('api/categories/', include('apps.categories.urls')),
 ]
