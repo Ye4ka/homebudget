@@ -85,7 +85,7 @@ const Transaction = () => {
         </table>
       </div>
 
-      <Button variant="yellow" className="mt-5">Добавить доход</Button>
+      <Button variant="yellow" className="mt-5">Посмотреть больше</Button>
     </div>
   );
 };

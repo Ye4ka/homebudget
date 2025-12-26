@@ -1,67 +1,82 @@
+import { Button } from "./Button";
+
 const Filters = ({ filters, setFilters, resetFilters }) => {
-  const categories = ["Зарплата", "Еда", "Фриланс"];
-
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 sm:gap-5 bg-white p-4 sm:p-5 rounded-xl shadow">
+    <div className="flex flex-wrap gap-3 items-end bg-white p-4 rounded-xl shadow w-full">
 
+      {/* Поиск */}
+      <div className="flex flex-col min-w-[140px] flex-1 sm:flex-none">
+        <label className="text-sm font-medium">Поиск</label>
+        <input
+          type="text"
+          className="border rounded-xl px-3 py-2 text-sm"
+          value={filters.search}
+          onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+          placeholder="Введите описание"
+        />
+      </div>
 
-      {/* поиск */}
-      <input
-        type="text"
-        placeholder="Поиск по описанию..."
-        className="border p-2 rounded-lg"
-        value={filters.search}
-        onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-      />
+      {/* Тип */}
+      <div className="flex flex-col min-w-[120px] flex-1 sm:flex-none">
+        <label className="text-sm font-medium">Тип</label>
+        <select
+          className="border rounded-xl px-3 py-2 text-sm"
+          value={filters.type}
+          onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+        >
+          <option value="">Все</option>
+          <option value="income">Доход</option>
+          <option value="expense">Расход</option>
+        </select>
+      </div>
 
-      {/* тип */}
-      <select
-        className="border p-2 rounded-lg"
-        value={filters.type}
-        onChange={(e) => setFilters({ ...filters, type: e.target.value })}
-      >
-        <option value="">Тип</option>
-        <option value="income">Доход</option>
-        <option value="expense">Расход</option>
-      </select>
+      {/* Категория */}
+      <div className="flex flex-col min-w-[120px] flex-1 sm:flex-none">
+        <label className="text-sm font-medium">Категория</label>
+        <select
+          className="border rounded-xl px-3 py-2 text-sm"
+          value={filters.category}
+          onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+        >
+          <option value="">Все</option>
+          {["Еда","Транспорт","Зарплата","Покупки","Развлечения","Путешествия"].map(c => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+      </div>
 
-      {/* категория */}
-      <select
-        className="border p-2 rounded-lg"
-        value={filters.category}
-        onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-      >
-        <option value="">Категория</option>
-        {categories.map((c) => (
-          <option key={c} value={c}>
-            {c}
-          </option>
-        ))}
-      </select>
+      {/* Дата ОТ */}
+      <div className="flex flex-col min-w-[140px] flex-1 sm:flex-none">
+        <label className="text-sm font-medium">Дата от</label>
+        <input
+          type="date"
+          className="border rounded-xl px-3 py-2 text-sm"
+          value={filters.dateFrom}
+          onChange={(e) => setFilters({ ...filters, dateFrom: e.target.value })}
+        />
+      </div>
 
-      {/* от */}
-      <input
-        type="date"
-        className="border p-2 rounded-lg"
-        value={filters.dateFrom}
-        onChange={(e) => setFilters({ ...filters, dateFrom: e.target.value })}
-      />
+      {/* Дата ДО */}
+      <div className="flex flex-col min-w-[140px] flex-1 sm:flex-none">
+        <label className="text-sm font-medium">Дата до</label>
+        <input
+          type="date"
+          className="border rounded-xl px-3 py-2 text-sm"
+          value={filters.dateTo}
+          onChange={(e) => setFilters({ ...filters, dateTo: e.target.value })}
+        />
+      </div>
 
-      {/* до */}
-      <input
-        type="date"
-        className="border p-2 rounded-lg"
-        value={filters.dateTo}
-        onChange={(e) => setFilters({ ...filters, dateTo: e.target.value })}
-      />
-
-      {/* кнопка сброс */}
-      <button
-        className="sm:col-span-5 bg-gray-200 p-3 rounded-lg hover:bg-gray-300 transition"
-        onClick={resetFilters}
-      >
-        Сбросить фильтры
-      </button>
+      {/* Кнопка сброса всегда справа */}
+      <div className="w-full sm:w-auto sm:ml-auto">
+        <Button
+          variant="primary"
+          onClick={resetFilters}
+          className="w-full sm:w-auto px-4 py-2 text-sm"
+        >
+          Сбросить
+        </Button>
+      </div>
 
     </div>
   );

@@ -2,13 +2,13 @@ import Logo from "../assets/images/Logo.png";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center mt-5">
-      <img src={Logo} className="w-38 sm:w-44" />
+    <header className="flex justify-between items-center mt-5 px-3 sm:px-5">
+      <img src={Logo} className="w-36 sm:w-44" alt="Logo" />
 
-      <div className="sm:text-xl font-semibold">
+      <div className="text-base sm:text-xl font-semibold text-right">
         Баланс: <span className="text-green-600">200 000 ₽</span>
       </div>
-    </div>
+    </header>
   );
 };
 
