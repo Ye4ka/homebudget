@@ -1,6 +1,4 @@
-"""
-URL маршруты для приложения Users.
-"""
+"""URL маршруты для приложения Users."""
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet
