@@ -4,7 +4,7 @@ try:
     conn = psycopg2.connect(
         dbname='homebudget',
         user='myuser',
-        password='твой_пароль',
+        password='mypassword',
         host='localhost',
         port='5432'
     )

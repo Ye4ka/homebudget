@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-"""
-Скрипт для добавления индексов к таблице notifications
-Запускать из корня проекта: python scripts/add_notification_indexes.py
-"""
 import os
 import sys
 
@@ -13,11 +8,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 import django
 try:
     django.setup()
-    print("✅ Django успешно настроен")
+    print("Django успешно настроен")
 except Exception as e:
-    print(f"❌ Ошибка настройки Django: {e}")
-    print("💡 Убедитесь, что вы в корневой папке проекта (homebudget/)")
-    print(f"📁 Текущая директория: {os.getcwd()}")
+    print(f"Ошибка настройки Django: {e}")
+    print("Убедитесь, что вы в корневой папке проекта (homebudget/)")
+    print(f"Текущая директория: {os.getcwd()}")
     sys.exit(1)
 
 from django.db import connection
@@ -41,14 +36,14 @@ def add_notification_indexes():
         existing_indexes = cursor.fetchall()
         
         if existing_indexes:
-            print(f"📊 Найдено индексов: {len(existing_indexes)}")
+            print(f"Найдено индексов: {len(existing_indexes)}")
             for name, definition in existing_indexes:
                 print(f"  • {name}")
         else:
-            print("📊 Индексы не найдены")
+            print("Индексы не найдены")
         
         # 2. Добавляем idx_user_read если нет
-        print("\n➕ Проверяем индекс idx_user_read...")
+        print("\n Проверяем индекс idx_user_read...")
         cursor.execute("""
             SELECT 1 FROM pg_indexes 
             WHERE indexname = 'idx_user_read' 
@@ -56,20 +51,20 @@ def add_notification_indexes():
         """)
         
         if cursor.fetchone():
-            print("✅ idx_user_read уже существует")
+            print("idx_user_read уже существует")
         else:
-            print("🛠️  Создаем idx_user_read...")
+            print("Создаем idx_user_read...")
             try:
                 cursor.execute("""
                     CREATE INDEX idx_user_read 
                     ON notifications_notification(user_id, is_read);
                 """)
-                print("✅ idx_user_read успешно создан")
+                print("idx_user_read успешно создан")
             except Exception as e:
-                print(f"❌ Ошибка создания idx_user_read: {e}")
+                print(f"Ошибка создания idx_user_read: {e}")
         
         # 3. Добавляем idx_created_at_desc если нет
-        print("\n➕ Проверяем индекс idx_created_at_desc...")
+        print("\n Проверяем индекс idx_created_at_desc...")
         cursor.execute("""
             SELECT 1 FROM pg_indexes 
             WHERE indexname = 'idx_created_at_desc' 
@@ -77,7 +72,7 @@ def add_notification_indexes():
         """)
         
         if cursor.fetchone():
-            print("✅ idx_created_at_desc уже существует")
+            print("idx_created_at_desc уже существует")
         else:
             print("🛠️  Создаем idx_created_at_desc...")
             try:
@@ -85,13 +80,13 @@ def add_notification_indexes():
                     CREATE INDEX idx_created_at_desc 
                     ON notifications_notification(created_at DESC);
                 """)
-                print("✅ idx_created_at_desc успешно создан")
+                print("idx_created_at_desc успешно создан")
             except Exception as e:
-                print(f"❌ Ошибка создания idx_created_at_desc: {e}")
+                print(f"Ошибка создания idx_created_at_desc: {e}")
         
         # 4. Проверяем индексы transactions тоже
         print("\n" + "=" * 70)
-        print("🔍 ПРОВЕРКА ИНДЕКСОВ ТРАНЗАКЦИЙ")
+        print("ПРОВЕРКА ИНДЕКСОВ ТРАНЗАКЦИЙ")
         print("=" * 70)
         
         transaction_indexes = [
@@ -109,13 +104,13 @@ def add_notification_indexes():
             """, [index_name])
             
             if cursor.fetchone():
-                print(f"✅ {index_name} существует")
+                print(f"{index_name} существует")
             else:
-                print(f"❌ {index_name} ОТСУТСТВУЕТ!")
+                print(f"{index_name} ОТСУТСТВУЕТ!")
         
         # 5. Финальная проверка
         print("\n" + "=" * 70)
-        print("📊 ФИНАЛЬНАЯ ПРОВЕРКА ВСЕХ ИНДЕКСОВ")
+        print("ФИНАЛЬНАЯ ПРОВЕРКА ВСЕХ ИНДЕКСОВ")
         print("=" * 70)
         
         cursor.execute("""
@@ -130,7 +125,7 @@ def add_notification_indexes():
         """)
         
         all_indexes = cursor.fetchall()
-        print(f"\n📈 Всего индексов: {len(all_indexes)}")
+        print(f"\n Всего индексов: {len(all_indexes)}")
         for table, index, size in all_indexes:
             print(f"  • {table}.{index} ({size})")
 
@@ -139,14 +134,13 @@ def main():
     try:
         add_notification_indexes()
         print("\n" + "=" * 70)
-        print("🎉 ЗАДАЧА 3: ИНДЕКСЫ УСПЕШНО ДОБАВЛЕНЫ!")
+        print("ИНДЕКСЫ УСПЕШНО ДОБАВЛЕНЫ!")
         print("=" * 70)
-        print("\n✅ Что сделано:")
         print("   • Индексы для notifications проверены/добавлены")
         print("   • Индексы для transactions проверены")
         print("   • Готово к созданию ER-диаграммы")
     except Exception as e:
-        print(f"\n❌ ОШИБКА: {e}")
+        print(f"\n ОШИБКА: {e}")
         import traceback
         traceback.print_exc()
 

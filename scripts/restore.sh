@@ -141,7 +141,7 @@ drop_and_recreate_db() {
 restore_database() {
     local backup_file=$1
     
-    log_message "🔄 Восстановление базы данных из: $backup_file"
+    log_message "Восстановление базы данных из: $backup_file"
     
  
     if zcat "$backup_file" | psql -h localhost -U "$DB_USER" -d "$DB_NAME" --quiet; then

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Скрипт для создания всех тестовых данных для задачи 2
 Разместите в: homebudget/create_data.py
@@ -6,10 +5,8 @@
 import os
 import sys
 
-# Добавляем backend в путь
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'backend'))
 
-# Настройка Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 import django
@@ -30,16 +27,15 @@ def create_superuser():
     if not User.objects.filter(is_superuser=True).exists():
         User.objects.create_superuser(
             username='admin',
-            email='admin@example.com',
-            password='admin123',
+            email='glebka.petrov.01@mail.ru',
+            password='******',
             currency='RUB'
         )
-        print("✅ Создан суперпользователь: admin")
+        print("Создан суперпользователь: admin")
     admin_user = User.objects.get(username='admin')
     return admin_user
 
 def create_categories(user):
-    """Создать 12 стандартных категорий (6 доходов, 6 расходов)"""
     categories = [
         # Доходы (6)
         {"name": "Зарплата", "type": "income", "color": "#4CAF50", "icon": "account-balance-wallet"},
@@ -62,7 +58,6 @@ def create_categories(user):
     existing_count = 0
     
     for cat_data in categories:
-        # Проверяем, существует ли категория
         if Category.objects.filter(name=cat_data['name'], type=cat_data['type'], is_default=True).exists():
             existing_count += 1
             continue
@@ -77,16 +72,15 @@ def create_categories(user):
                 created_by=user
             )
             created_count += 1
-            print(f"  ✅ Создана: {cat_data['name']} ({cat_data['type']})")
+            print(f"  Создана: {cat_data['name']} ({cat_data['type']})")
         except Exception as e:
-            print(f"  ❌ Ошибка создания {cat_data['name']}: {e}")
+            print(f"  Ошибка создания {cat_data['name']}: {e}")
     
-    print(f"\n📊 Категории: создано {created_count}, уже было {existing_count}")
+    print(f"\nКатегории: создано {created_count}, уже было {existing_count}")
     return Category.objects.all()
 
 def create_test_users():
-    """Создать 3 тестовых пользователя"""
-    print("\n👤 Создание тестовых пользователей...")
+    print("\n Создание тестовых пользователей...")
     
     users_data = [
         {'username': 'alex', 'email': 'alex@example.com', 'password': 'password123', 'currency': 'RUB'},
@@ -105,19 +99,18 @@ def create_test_users():
                     currency=data['currency']
                 )
                 users.append(user)
-                print(f"  ✅ Создан: {user.username} ({user.email})")
+                print(f"  Создан: {user.username} ({user.email})")
             except Exception as e:
-                print(f"  ❌ Ошибка создания {data['username']}: {e}")
+                print(f"  Ошибка создания {data['username']}: {e}")
         else:
             user = User.objects.get(username=data['username'])
             users.append(user)
-            print(f"  ⚠️  Уже существует: {user.username}")
+            print(f"  Уже существует: {user.username}")
     
     return users
 
 def create_budgets(users):
-    """Создать 2 бюджета (личный и семейный)"""
-    print("\n💰 Создание бюджетов...")
+    print("\n Создание бюджетов...")
     
     budgets = []
     
@@ -130,11 +123,11 @@ def create_budgets(users):
             currency=users[0].currency
         )
         budgets.append(personal_budget)
-        print(f"  ✅ Личный бюджет: {personal_budget.name}")
+        print(f"Личный бюджет: {personal_budget.name}")
     else:
         personal_budget = Budget.objects.get(name='Личный бюджет Алекса')
         budgets.append(personal_budget)
-        print(f"  ⚠️  Личный бюджет уже существует")
+        print(f"Личный бюджет уже существует")
     
     # 2. Семейный бюджет
     if not Budget.objects.filter(name='Семейный бюджет').exists():
@@ -145,37 +138,35 @@ def create_budgets(users):
             currency='RUB'
         )
         budgets.append(family_budget)
-        print(f"  ✅ Семейный бюджет: {family_budget.name}")
+        print(f"Семейный бюджет: {family_budget.name}")
         
-        # Добавляем участников
         for i, user in enumerate(users[1:], 1):
             BudgetMember.objects.create(
                 budget=family_budget,
                 user=user,
                 role='editor' if i == 1 else 'viewer'
             )
-            print(f"  ✅ Участник: {user.username} ({'редактор' if i == 1 else 'наблюдатель'})")
+            print(f"Участник: {user.username} ({'редактор' if i == 1 else 'наблюдатель'})")
     else:
         family_budget = Budget.objects.get(name='Семейный бюджет')
         budgets.append(family_budget)
-        print(f"  ⚠️  Семейный бюджет уже существует")
+        print(f"Семейный бюджет уже существует")
     
     return budgets
 
 def create_transactions(budgets, categories):
-    """Создать 50 тестовых транзакций"""
-    print("\n💸 Создание транзакций...")
+    
+    print("\n Создание транзакций...")
     
     if not budgets or not categories:
-        print("  ❌ Нет бюджетов или категорий")
+        print("Нет бюджетов или категорий")
         return
     
-    # Разделяем категории
     income_categories = categories.filter(type='income')
     expense_categories = categories.filter(type='expense')
     
     if not income_categories.exists() or not expense_categories.exists():
-        print("  ❌ Нет категорий доходов или расходов")
+        print("Нет категорий доходов или расходов")
         return
     
     today = datetime.now().date()
@@ -211,7 +202,6 @@ def create_transactions(budgets, categories):
                 else:
                     created_by = budget.owner
             
-            # Создаем транзакцию
             Transaction.objects.create(
                 amount=amount,
                 type=trans_type,
@@ -228,15 +218,14 @@ def create_transactions(budgets, categories):
                 print(f"  Создано {i + 1} транзакций...")
                 
         except Exception as e:
-            print(f"  ❌ Ошибка транзакции #{i+1}: {e}")
+            print(f"Ошибка транзакции #{i+1}: {e}")
     
-    print(f"  ✅ Всего создано: {transaction_count} транзакций")
+    print(f"Всего создано: {transaction_count} транзакций")
     return transaction_count
 
 def print_statistics():
-    """Вывести статистику"""
     print("\n" + "="*60)
-    print("📊 ФИНАЛЬНАЯ СТАТИСТИКА БАЗЫ ДАННЫХ")
+    print("ФИНАЛЬНАЯ СТАТИСТИКА БАЗЫ ДАННЫХ")
     print("="*60)
     
     try:
@@ -244,23 +233,23 @@ def print_statistics():
         
         # Пользователи
         user_count = User.objects.count()
-        print(f"👤 Пользователей: {user_count}")
+        print(f"Пользователей: {user_count}")
         
         # Бюджеты
         budget_count = Budget.objects.count()
         personal_count = Budget.objects.filter(type='personal').count()
         family_count = Budget.objects.filter(type='family').count()
-        print(f"💰 Бюджетов: {budget_count} (личных: {personal_count}, семейных: {family_count})")
+        print(f"Бюджетов: {budget_count} (личных: {personal_count}, семейных: {family_count})")
         
         # Участники
         member_count = BudgetMember.objects.count()
-        print(f"👥 Участников бюджетов: {member_count}")
+        print(f"Участников бюджетов: {member_count}")
         
         # Категории
         category_count = Category.objects.count()
         income_cat_count = Category.objects.filter(type='income').count()
         expense_cat_count = Category.objects.filter(type='expense').count()
-        print(f"🏷️  Категорий: {category_count} (доходы: {income_cat_count}, расходы: {expense_cat_count})")
+        print(f"Категорий: {category_count} (доходы: {income_cat_count}, расходы: {expense_cat_count})")
         
         # Транзакции
         transaction_count = Transaction.objects.count()
@@ -270,57 +259,43 @@ def print_statistics():
             income_count = Transaction.objects.filter(type='income').count()
             expense_count = Transaction.objects.filter(type='expense').count()
             
-            print(f"💸 Транзакций: {transaction_count}")
+            print(f"Транзакций: {transaction_count}")
             print(f"  • Доходы: {income_count} на сумму {income_sum:.2f}")
             print(f"  • Расходы: {expense_count} на сумму {expense_sum:.2f}")
             print(f"  • Баланс: {income_sum - expense_sum:.2f}")
         
-        print("="*60)
-        print("🎉 ЗАДАЧА 2 ВЫПОЛНЕНА УСПЕШНО!")
-        print("="*60)
+   
         
     except Exception as e:
-        print(f"❌ Ошибка статистики: {e}")
+        print(f"Ошибка статистики: {e}")
 
 def main():
-    """Основная функция"""
-    print("=" * 70)
-    print("🚀 ВЫПОЛНЕНИЕ ЗАДАЧИ 2: НАЧАЛЬНЫЕ ДАННЫХ + УЛУЧШЕННЫЕ МИГРАЦИИ")
-    print("=" * 70)
-    
     try:
-        # 1. Создать суперпользователя (для категорий)
-        print("\n1️⃣  Создание суперпользователя...")
+        print("\n Создание суперпользователя...")
         admin = create_superuser()
-        
-        # 2. Создать 12 категорий (6 доходов + 6 расходов)
-        print("\n2️⃣  Создание категорий...")
+
+        print("\n Создание категорий...")
         categories = create_categories(admin)
-        
-        # 3. Создать 3 тестовых пользователя
-        print("\n3️⃣  Создание пользователей...")
+
+        print("\n Создание пользователей...")
         users = create_test_users()
         
-        # 4. Создать 2 бюджета
-        print("\n4️⃣  Создание бюджетов...")
+        print("\n Создание бюджетов...")
         budgets = create_budgets(users)
         
-        # 5. Создать 50 транзакций
-        print("\n5️⃣  Создание транзакций...")
+        print("\n Создание транзакций...")
         create_transactions(budgets, categories)
         
-        # 6. Вывести статистику
         print_statistics()
         
-        print("\n✅ ВСЕ ЧАСТИ ЗАДАЧИ 2 ВЫПОЛНЕНЫ:")
-        print("   • CHECK constraints добавлены в миграциях ✓")
-        print("   • 12 категорий (6 доходов + 6 расходов) созданы ✓")
-        print("   • 3 пользователя созданы ✓")
-        print("   • 2 бюджета (личный и семейный) созданы ✓")
-        print("   • 50 транзакций созданы ✓")
+        print("   • CHECK constraints добавлены в миграциях ")
+        print("   • 12 категорий (6 доходов + 6 расходов) созданы ")
+        print("   • 3 пользователя созданы ")
+        print("   • 2 бюджета (личный и семейный) созданы ")
+        print("   • 50 транзакций созданы ")
         
     except Exception as e:
-        print(f"\n❌ КРИТИЧЕСКАЯ ОШИБКА: {e}")
+        print(f"\n КРИТИЧЕСКАЯ ОШИБКА: {e}")
         import traceback
         traceback.print_exc()
 

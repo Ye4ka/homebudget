@@ -13,14 +13,13 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 try:
     django.setup()
 except Exception as e:
-    print(f"❌ Ошибка настройки Django: {e}")
+    print(f"Ошибка настройки Django: {e}")
     sys.exit(1)
 
 from django.db import connection
 
 def check_current_state():
-    """Проверить текущее состояние базы данных"""
-    print("🔍 Проверка текущего состояния...")
+    print("Проверка текущего состояния...")
     
     with connection.cursor() as cursor:
         
@@ -32,7 +31,7 @@ def check_current_state():
         """)
         tables = cursor.fetchall()
         
-        print(f"📊 Найдено таблиц: {len(tables)}")
+        print(f"Найдено таблиц: {len(tables)}")
         for table in tables[:10]:  
             print(f"  - {table[0]}")
         
@@ -42,7 +41,6 @@ def check_current_state():
     return tables
 
 def fix_migrations():
-    """Исправить состояние миграций"""
     print("\n🔧 Исправление состояния миграций...")
     
     with connection.cursor() as cursor:
@@ -57,13 +55,13 @@ def fix_migrations():
         exists = cursor.fetchone()[0]
         
         if not exists:
-            print("❌ Таблица django_migrations не существует!")
+            print("Таблица django_migrations не существует!")
             print("   Запустите: python manage.py migrate")
             return False
         
       
         cursor.execute("DELETE FROM django_migrations;")
-        print("✅ Таблица django_migrations очищена")
+        print("Таблица django_migrations очищена")
         
        
         base_migrations = [
@@ -110,7 +108,7 @@ def fix_migrations():
             if not existing:
                 
                 base_migrations.append((app, '0001_initial'))
-                print(f"✅ Добавлена миграция: {app}.0001_initial")
+                print(f"Добавлена миграция: {app}.0001_initial")
         
         
         for app, name in base_migrations:
@@ -119,13 +117,12 @@ def fix_migrations():
                 VALUES (%s, %s, NOW());
             """, [app, name])
         
-        print(f"✅ Добавлено {len(base_migrations)} записей о миграциях")
+        print(f"Добавлено {len(base_migrations)} записей о миграциях")
         
         return True
 
 def verify_fix():
-    """Проверить исправление"""
-    print("\n🔍 Проверка исправления...")
+    print("\n Проверка исправления...")
     
     with connection.cursor() as cursor:
        
@@ -137,7 +134,7 @@ def verify_fix():
         
         migrations = cursor.fetchall()
         
-        print(f"📊 Всего записей в django_migrations: {len(migrations)}")
+        print(f"Всего записей в django_migrations: {len(migrations)}")
         
        
         apps = {}
@@ -156,8 +153,7 @@ def verify_fix():
     return True
 
 def create_missing_tables():
-    """Создать отсутствующие таблицы"""
-    print("\n🛠️  Проверка отсутствующих таблиц...")
+    print("\n Проверка отсутствующих таблиц...")
     
 
     expected_tables = [
@@ -187,11 +183,11 @@ def create_missing_tables():
                 missing_tables.append(table)
         
         if missing_tables:
-            print(f"⚠️  Отсутствуют таблицы: {len(missing_tables)}")
+            print(f"Отсутствуют таблицы: {len(missing_tables)}")
             for table in missing_tables:
                 print(f"  - {table}")
             
-            print("\n🔧 Создание отсутствующих таблиц...")
+            print("\n Создание отсутствующих таблиц...")
             
           
             for table in missing_tables:
@@ -210,12 +206,12 @@ def create_missing_tables():
                     os.system("python manage.py migrate transactions")
         
         else:
-            print("✅ Все ожидаемые таблицы существуют")
+            print("Все ожидаемые таблицы существуют")
 
 def main():
     """Основная функция"""
     print("=" * 70)
-    print("🔄 ИСПРАВЛЕНИЕ СОСТОЯНИЯ МИГРАЦИЙ БАЗЫ ДАННЫХ")
+    print("ИСПРАВЛЕНИЕ СОСТОЯНИЯ МИГРАЦИЙ БАЗЫ ДАННЫХ")
     print("=" * 70)
     
     try:
@@ -223,7 +219,7 @@ def main():
         tables = check_current_state()
         
         if not tables:
-            print("\n❌ В базе данных нет таблиц!")
+            print("\n В базе данных нет таблиц!")
             print("   Запустите: python manage.py migrate")
             return
         
@@ -238,15 +234,15 @@ def main():
         verify_fix()
         
         print("\n" + "=" * 70)
-        print("✅ СОСТОЯНИЕ МИГРАЦИЙ УСПЕШНО ИСПРАВЛЕНО!")
+        print("СОСТОЯНИЕ МИГРАЦИЙ УСПЕШНО ИСПРАВЛЕНО!")
         print("=" * 70)
-        print("\n📋 Рекомендуемые действия:")
+        print("\n Рекомендуемые действия:")
         print("1. Проверьте миграции: python manage.py showmigrations")
         print("2. Создайте суперпользователя: python manage.py createsuperuser")
         print("3. Запустите сервер: python manage.py runserver")
         
     except Exception as e:
-        print(f"\n❌ Ошибка: {e}")
+        print(f"\n Ошибка: {e}")
         import traceback
         traceback.print_exc()
 

@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Создать стандартные категории доходов и расходов'
     
     def handle(self, *args, **options):
-        self.stdout.write("📦 Создание стандартных категорий...")
+        self.stdout.write("Создание стандартных категорий...")
         
        
         admin_user, created = User.objects.get_or_create(
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         if created:
             admin_user.set_password('admin123')
             admin_user.save()
-            self.stdout.write(self.style.SUCCESS('✅ Суперпользователь создан'))
+            self.stdout.write(self.style.SUCCESS('Суперпользователь создан'))
         
         categories = [
             # Доходы (6 категорий)
@@ -63,12 +63,12 @@ class Command(BaseCommand):
                     created_by=admin_user
                 )
                 created_count += 1
-                self.stdout.write(self.style.SUCCESS(f'✅ Создана: {cat_data["name"]}'))
+                self.stdout.write(self.style.SUCCESS(f'Создана: {cat_data["name"]}'))
             except Exception as e:
-                self.stdout.write(self.style.ERROR(f'❌ Ошибка создания {cat_data["name"]}: {e}'))
+                self.stdout.write(self.style.ERROR(f'Ошибка создания {cat_data["name"]}: {e}'))
         
-        self.stdout.write(self.style.SUCCESS(f'\n🎉 Категории созданы: {created_count} новых, {existing_count} уже существовало'))
-        self.stdout.write(f'📊 Всего категорий в БД: {Category.objects.count()}')
+        self.stdout.write(self.style.SUCCESS(f'\nКатегории созданы: {created_count} новых, {existing_count} уже существовало'))
+        self.stdout.write(f'Всего категорий в БД: {Category.objects.count()}')
         
         # Статистика
         income_cats = Category.objects.filter(type='income', is_default=True).count()

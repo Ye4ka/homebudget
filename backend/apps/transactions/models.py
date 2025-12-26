@@ -66,9 +66,9 @@ class Transaction(models.Model):
         verbose_name_plural = 'Транзакции'
         ordering = ['-date', '-created_at']
         indexes = [
-            models.Index(fields=['budget', '-date'], name='idx_budget_date'),          # было: idx_transaction_budget_date
-            models.Index(fields=['budget', 'category'], name='idx_budget_category'),   # было: idx_transaction_budget_category
-            models.Index(fields=['type'], name='idx_trans_type'),                      # было: idx_transaction_type
+            models.Index(fields=['budget', '-date'], name='idx_budget_date'),         
+            models.Index(fields=['budget', 'category'], name='idx_budget_category'),   
+            models.Index(fields=['type'], name='idx_trans_type'),                      
         ]
         constraints = [
             models.CheckConstraint(

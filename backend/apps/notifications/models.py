@@ -51,12 +51,12 @@ class Notification(models.Model):
         verbose_name_plural = 'Уведомления'
         ordering = ['-created_at']
         indexes = [
-            models.Index(fields=['user', 'is_read'], name='idx_user_read'),  # было: idx_notification_user_read
+            models.Index(fields=['user', 'is_read'], name='idx_user_read'),  
         ]
         constraints = [
             models.CheckConstraint(
                 check=models.Q(type__in=['info', 'warning', 'success', 'error']),
-                name='notif_valid_type'  # сокращено
+                name='notif_valid_type'  
             ),
         ]
     

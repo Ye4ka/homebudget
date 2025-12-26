@@ -2,7 +2,7 @@ echo "Введите пароль PostgreSQL для пользователя pos
 read -s PASSWORD
 export PGPASSWORD="$PASSWORD"
 DB_NAME="homebudget"
-DB_USER="myuser"  # <-- ИЗМЕНИЛ НА myuser
+DB_USER="myuser" 
 OUTPUT_FILE="logs/db-monitor-$(date +%Y%m%d_%H%M%S).log"
 
 mkdir -p logs

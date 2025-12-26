@@ -22,7 +22,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         self.stdout.write("=" * 60)
-        self.stdout.write("🚀 СОЗДАНИЕ ТЕСТОВЫХ ДАННЫХ ДЛЯ ЗАДАЧИ 2")
+        self.stdout.write("СОЗДАНИЕ ТЕСТОВЫХ ДАННЫХ ДЛЯ ЗАДАЧИ 2")
         self.stdout.write("=" * 60)
         
         num_transactions = options['transactions']
@@ -31,16 +31,16 @@ class Command(BaseCommand):
         admin, created = User.objects.get_or_create(
             username='admin',
             defaults={
-                'email': 'admin@example.com',
+                'email': 'glebka.petrov.01@mail.ru',
                 'is_superuser': True,
                 'is_staff': True,
                 'currency': 'RUB'
             }
         )
         if created:
-            admin.set_password('admin123')
+            admin.set_password('******')
             admin.save()
-            self.stdout.write(self.style.SUCCESS('✅ Суперпользователь admin создан'))
+            self.stdout.write(self.style.SUCCESS('Суперпользователь admin создан'))
         
         # 2. Категории (12 штук)
         categories_data = [
@@ -72,7 +72,7 @@ class Command(BaseCommand):
                     'created_by': admin
                 }
             )
-        self.stdout.write(self.style.SUCCESS(f'✅ 12 категорий создано (6 доходов, 6 расходов)'))
+        self.stdout.write(self.style.SUCCESS(f'12 категорий создано (6 доходов, 6 расходов)'))
         
         # 3. Тестовые пользователи (3 штуки)
         test_users = []
@@ -93,9 +93,9 @@ class Command(BaseCommand):
             if created:
                 user.set_password('password123')
                 user.save()
-                self.stdout.write(self.style.SUCCESS(f'✅ Пользователь {user.username} создан'))
+                self.stdout.write(self.style.SUCCESS(f'Пользователь {user.username} создан'))
             else:
-                self.stdout.write(f'⚠️  Пользователь {user.username} уже существует')
+                self.stdout.write(f'Пользователь {user.username} уже существует')
             test_users.append(user)
         
         # 4. Бюджеты (2 штуки)
@@ -108,7 +108,7 @@ class Command(BaseCommand):
             }
         )
         if created:
-            self.stdout.write(self.style.SUCCESS('✅ Личный бюджет создан'))
+            self.stdout.write(self.style.SUCCESS('Личный бюджет создан'))
         
         family_budget, created = Budget.objects.get_or_create(
             name='Семейный бюджет',
@@ -119,7 +119,7 @@ class Command(BaseCommand):
             }
         )
         if created:
-            self.stdout.write(self.style.SUCCESS('✅ Семейный бюджет создан'))
+            self.stdout.write(self.style.SUCCESS('Семейный бюджет создан'))
             
             # Добавляем участников
             for user in test_users[1:]:
@@ -128,7 +128,7 @@ class Command(BaseCommand):
                     user=user,
                     role='editor'
                 )
-                self.stdout.write(f'✅ Участник {user.username} добавлен в семейный бюджет')
+                self.stdout.write(f'Участник {user.username} добавлен в семейный бюджет')
         
         # 5. Транзакции
         income_cats = list(Category.objects.filter(type='income'))
@@ -173,11 +173,11 @@ class Command(BaseCommand):
             if (i + 1) % 10 == 0:
                 self.stdout.write(f'  Создано {i + 1} транзакций...')
         
-        self.stdout.write(self.style.SUCCESS(f'✅ {num_transactions} транзакций создано'))
+        self.stdout.write(self.style.SUCCESS(f'{num_transactions} транзакций создано'))
         
         # 6. Статистика
         self.stdout.write("\n" + "=" * 60)
-        self.stdout.write("📊 СТАТИСТИКА СОЗДАННЫХ ДАННЫХ")
+        self.stdout.write("СТАТИСТИКА СОЗДАННЫХ ДАННЫХ")
         self.stdout.write("=" * 60)
         
         from django.db.models import Sum
@@ -186,21 +186,11 @@ class Command(BaseCommand):
         income_sum = Transaction.objects.filter(type='income').aggregate(Sum('amount'))['amount__sum'] or 0
         expense_sum = Transaction.objects.filter(type='expense').aggregate(Sum('amount'))['amount__sum'] or 0
         
-        self.stdout.write(f"👤 Пользователей: {User.objects.count()}")
-        self.stdout.write(f"💰 Бюджетов: {Budget.objects.count()}")
-        self.stdout.write(f"🏷️  Категорий: {Category.objects.count()}")
-        self.stdout.write(f"💸 Транзакций: {transaction_count}")
-        self.stdout.write(f"📈 Сумма доходов: {income_sum:.2f}")
-        self.stdout.write(f"📉 Сумма расходов: {expense_sum:.2f}")
-        self.stdout.write(f"⚖️  Баланс: {income_sum - expense_sum:.2f}")
+        self.stdout.write(f"Пользователей: {User.objects.count()}")
+        self.stdout.write(f"Бюджетов: {Budget.objects.count()}")
+        self.stdout.write(f"Категорий: {Category.objects.count()}")
+        self.stdout.write(f"Транзакций: {transaction_count}")
+        self.stdout.write(f"Сумма доходов: {income_sum:.2f}")
+        self.stdout.write(f"Сумма расходов: {expense_sum:.2f}")
+        self.stdout.write(f"Баланс: {income_sum - expense_sum:.2f}")
         
-        self.stdout.write("\n" + "=" * 60)
-        self.stdout.write(self.style.SUCCESS("🎉 ЗАДАЧА 2 ВЫПОЛНЕНА УСПЕШНО!"))
-        self.stdout.write("=" * 60)
-        
-        self.stdout.write("\n✅ ЧТО БЫЛО СДЕЛАНО:")
-        self.stdout.write("   • 12 категорий (6 доходов + 6 расходов)")
-        self.stdout.write("   • 3 тестовых пользователя")
-        self.stdout.write("   • 2 бюджета (личный и семейный)")
-        self.stdout.write(f"   • {num_transactions} транзакций")
-        self.stdout.write("   • Все CHECK constraints добавлены в миграциях")
