@@ -123,17 +123,17 @@ const TransactionsPage = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-y-6 sm:gap-y-10 px-2 sm:px-0">
+    <div className="w-full flex flex-col gap-y-6 sm:gap-y-10 px-3 sm:px-5">
 
       {/* Заголовок + кнопка */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-        <h1 className="font-montserrat text-2xl sm:text-4xl font-semibold">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pr-3 sm:pr-4">
+        <h1 className="font-montserrat text-2xl sm:text-4xl font-semibold text-left">
           Операции
         </h1>
 
         <Button
           variant="yellow"
-          className="w-full sm:w-auto"
+          className="w-full sm:w-auto px-4 py-2 text-sm sm:text-base"
           onClick={() => {
             setSelectedTx(null);
             setIsFormOpen(true);
@@ -144,16 +144,12 @@ const TransactionsPage = () => {
       </div>
 
       {/* Фильтры */}
-      <div className="overflow-x-auto">
-        <Filters
-          filters={filters}
-          setFilters={setFilters}
-          resetFilters={resetFilters}
-        />
+      <div className="overflow-x-auto pr-3 sm:pr-4">
+        <Filters filters={filters} setFilters={setFilters} resetFilters={resetFilters} />
       </div>
 
       {/* Таблица */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto pr-3 sm:pr-4">
         <TransactionTable
           loading={loading}
           error={error}
@@ -189,6 +185,7 @@ const TransactionsPage = () => {
       />
     </div>
   );
+
 
 };
 
