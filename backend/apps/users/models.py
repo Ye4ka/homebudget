@@ -88,7 +88,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ['-date_joined']  # Сортировка по дате
-    
+        app_label = 'users'
     def __str__(self):
         """Строковое представление пользователя."""
         return self.email
