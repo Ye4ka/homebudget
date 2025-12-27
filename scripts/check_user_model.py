@@ -18,7 +18,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-print("🔍 ПРОВЕРКА МОДЕЛИ ПОЛЬЗОВАТЕЛЯ")
+print(" ПРОВЕРКА МОДЕЛИ ПОЛЬЗОВАТЕЛЯ")
 print("="*50)
 
 # 1. Проверяем поля модели
@@ -52,7 +52,7 @@ try:
         first_name='Test',
         last_name='User'
     )
-    print(f"✅ Пользователь создан: {user.email}")
+    print(f" Пользователь создан: {user.email}")
     
     # Проверяем методы
     print(f"   Полное имя: {user.get_full_name()}")
@@ -60,10 +60,10 @@ try:
     
     # Удаляем тестового пользователя
     user.delete()
-    print("✅ Тестовый пользователь удален")
+    print(" Тестовый пользователь удален")
     
 except Exception as e:
-    print(f"❌ Ошибка: {e}")
+    print(f" Ошибка: {e}")
     print("\nВозможные причины:")
     print("1. Модель требует поле username")
     print("2. Неправильные миграции")
