@@ -1,0 +1,12 @@
+BACKUP SUMMARY
+==============
+Date:          2025-12-27 23:44:16
+Type:          --daily
+Database:      homebudget
+User:          myuser
+Backup file:   homebudget_backup_20251227_234339.sql.gz
+Backup size:   12K
+Duration:      10s
+Status:        SUCCESS
+Total backups: 1
+Total size:    12K

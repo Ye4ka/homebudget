@@ -20,6 +20,14 @@ class UserManager(BaseUserManager):
         
         email = self.normalize_email(email)
         
+        # Устанавливаем username = email если не указан (для совместимости)
+        if 'username' not in extra_fields:
+            extra_fields['username'] = email.split('@')[0]
+        
+        # Устанавливаем currency по умолчанию если не указан
+        if 'currency' not in extra_fields:
+            extra_fields['currency'] = 'RUB'
+        
         user = self.model(email=email, **extra_fields)
         
         user.set_password(password)
@@ -51,6 +59,23 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
         help_text='Используется для входа в систему'
     )
+    
+    # Поля для совместимости со старой базой
+    username = models.CharField(
+        'Имя пользователя',
+        max_length=150,
+        blank=True,
+        null=True,
+        help_text='Для совместимости со старой базой'
+    )
+    
+    currency = models.CharField(
+        'Валюта по умолчанию',
+        max_length=3,
+        default='RUB',
+        help_text='Валюта по умолчанию для пользователя'
+    )
+    
     first_name = models.CharField(
         'Имя',
         max_length=150,
@@ -88,6 +113,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ['-date_joined']  # Сортировка по дате
+        app_label = 'users'
     
     def __str__(self):
         """Строковое представление пользователя."""
@@ -121,4 +147,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def has_budgets(self):
         """Проверить есть ли у пользователя бюджеты."""
-        return self.budgets.exists()    
+        return self.budgets.exists()

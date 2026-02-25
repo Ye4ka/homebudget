@@ -64,6 +64,7 @@ class Category(models.Model):
     )
     
     class Meta:
+        app_label = 'categories' 
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['type', 'name']

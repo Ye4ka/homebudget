@@ -130,6 +130,7 @@ class Transaction(models.Model):
     objects = TransactionManager()
     
     class Meta:
+        app_label = 'transactions' 
         verbose_name = 'Транзакция'
         verbose_name_plural = 'Транзакции'
         ordering = ['-date', '-created_at']

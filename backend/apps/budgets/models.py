@@ -91,6 +91,7 @@ class Budget(models.Model):
     objects = BudgetManager()
 
     class Meta:
+        app_label = 'budgets'
         verbose_name = 'Бюджет'
         verbose_name_plural = 'Бюджеты'
         ordering = ['-created_at']
